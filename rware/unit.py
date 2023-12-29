@@ -46,7 +46,7 @@ action_list.append((1))
 
 ################## A Start #######################
 
-def planning(start, goal):
+def planning(start, goal, o):
   sx = start[0]
   sy = start[1]
   gx = goal[0]
@@ -72,20 +72,11 @@ def planning(start, goal):
   ox.append(11)
   oy.append(11)
 
-  for i in range(len(env.shelfs)):
-    print(i)
-    print(env.shelfs[i].x)
-    print(env.shelfs[i].y)
-    if env.shelfs[i] in env.request_queue:
-      print("req")
-      gx = env.shelfs[i].x
-      gy = env.shelfs[i].y
-    else:
-      ox.append(env.shelfs[i].x)
-      oy.append(env.shelfs[i].y)
+  for i in range(len(o[0])):
+    ox.append(o[0][i])
+    oy.append(o[1][i])
 
-      print("not req")
-   
+  
   show_animation = False
   if show_animation:  # pragma: no cover
       plt.plot(ox, oy, ".k")
@@ -109,10 +100,26 @@ def planning(start, goal):
 
 sx = env.agents[0].x  # [m]
 sy = env.agents[0].y  # [m]
-gx = 10.0  # [m]
-gy = 10.0  # [m]
+gx = None  # [m]
+gy = None  # [m]
 
-rx, ry = planning([sx,sy], [gx, gy])
+ox = []
+oy = []
+for i in range(len(env.shelfs)):
+  print(i)
+  print(env.shelfs[i].x)
+  print(env.shelfs[i].y)
+  if env.shelfs[i] in env.request_queue:
+    print("req")
+    gx = env.shelfs[i].x
+    gy = env.shelfs[i].y
+  else:
+    ox.append(env.shelfs[i].x)
+    oy.append(env.shelfs[i].y)
+
+    print("not req")
+
+rx, ry = planning([sx,sy], [gx, gy], [ox, oy])
 
 print("**** result ****")
 print(rx)
