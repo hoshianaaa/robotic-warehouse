@@ -1,17 +1,31 @@
+
+################ A start ###########
+
+import os
+home_dir = os.environ['HOME']
+python_util_dir = home_dir + "/PythonRobotics/PathPlanning/AStar"
+
+import sys
+sys.path.append(python_util_dir)
+
+from a_star import *
+
+###################################
+
 import gym
 import rware
 
-env = gym.make("rware-tiny-1ag-v1", sensor_range=3, request_queue_size=6)
+env = gym.make("rware-tiny-1ag-v1", sensor_range=3, request_queue_size=1)
 
 #print(env.n_agents)
 #print(env.action_space[0])
 #print(env.observation_space)
-
 obs = env.reset()  # a tuple of observations
+#env.agents[0].x = 1
+#env.agents[0].y = 1
+
 print(obs)
 
-actions = env.action_space.sample()  # the action space can be sampled
-n_obs, reward, done, info = env.step(actions)
 #print(actions)
 #print(done)    # [False, False]
 #print(reward)  # [0.0, 0.0]
@@ -20,6 +34,8 @@ n_obs, reward, done, info = env.step(actions)
 action_list = []
 action_list.append((1))
 #action_list.append((1,1))
+
+# エージェントの位置を初期化
 
 import time
 #for i in range(len(action_list)):
@@ -60,6 +76,8 @@ while True:
       print("req")
     else:
       print("not req")
+  
+  print(env.request_queue)
   
   time.sleep(1)
   env.render()
