@@ -84,6 +84,7 @@ for i in range(len(env.shelfs)):
 
     print("not req")
  
+show_animation = False
 if show_animation:  # pragma: no cover
     plt.plot(ox, oy, ".k")
     plt.plot(sx, sy, "og")
