@@ -82,10 +82,29 @@ if show_animation:  # pragma: no cover
 a_star = AStarPlanner(ox, oy, grid_size, robot_radius)
 rx, ry = a_star.planning(sx, sy, gx, gy)
 
+rx.reverse()
+ry.reverse()
+
+print("**** result ****")
+print(rx)
+print(ry)
+
+drx = []
+dry = []
+for i in range(len(rx)-1):
+  drx.append(rx[i+1] - rx[i])
+  dry.append(ry[i+1] - ry[i])
+
+print("**** d result ****")
+print(drx)
+print(dry)
+
+
 if show_animation:  # pragma: no cover
     plt.plot(rx, ry, "-r")
     plt.pause(0.001)
     plt.show()
+
 
 #################################################
 
