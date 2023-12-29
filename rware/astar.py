@@ -235,10 +235,10 @@ def main():
     print(__file__ + " start!!")
 
     # start and goal position
-    sx = 10.0  # [m]
-    sy = 10.0  # [m]
-    gx = 50.0  # [m]
-    gy = 50.0  # [m]
+    sx = 0.0  # [m]
+    sy = 0.0  # [m]
+    gx = 100.0  # [m]
+    gy = 100.0  # [m]
     grid_size = 10.0  # [m]
     robot_radius = 1.0  # [m]
 

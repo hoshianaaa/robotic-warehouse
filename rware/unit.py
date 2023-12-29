@@ -2,13 +2,8 @@
 ################ A start ###########
 
 import os
-home_dir = os.environ['HOME']
-python_util_dir = home_dir + "/PythonRobotics/PathPlanning/AStar"
 
-import sys
-sys.path.append(python_util_dir)
-
-from a_star import *
+from astar import *
 
 ###################################
 
