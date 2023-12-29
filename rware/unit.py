@@ -60,7 +60,6 @@ while True:
       print("req")
     else:
       print("not req")
-
   
   time.sleep(1)
   env.render()
