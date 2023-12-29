@@ -120,22 +120,6 @@ for i in range(len(env.shelfs)):
     print("not req")
 
 rx, ry = planning([sx,sy], [gx, gy], [ox, oy])
-
-print("**** result ****")
-print(rx)
-print(ry)
-
-drx = []
-dry = []
-for i in range(len(rx)-1):
-  drx.append(rx[i+1] - rx[i])
-  dry.append(ry[i+1] - ry[i])
-
-print("**** d result ****")
-print(drx)
-print(dry)
-
-
 #################################################
 # **** convert a start path to action list **** #
 #################################################
@@ -149,57 +133,67 @@ print(dry)
 #  RIGHT = 3
 #  TOGGLE_LOAD = 4
 
+def path_to_action([sx,sy,s_dir], [rx, ry])
+
+  print("**** result ****")
+  print(rx)
+  print(ry)
+
+  drx = []
+  dry = []
+  for i in range(len(rx)-1):
+    drx.append(rx[i+1] - rx[i])
+    dry.append(ry[i+1] - ry[i])
+
+  r_dir_vec = [0,0]
+
+  if r_dir == 0:
+    r_dir_vec = [0,-1]
+  if r_dir == 1:
+    r_dir_vec = [0,1]
+  if r_dir == 2:
+    r_dir_vec = [-1,0]
+  if r_dir == 3:
+    r_dir_vec = [1,0]
+
+
+  action_list = []
+  action_list_debug = []
+
+  print("rotate")
+  for i in range(len(rx)-1):
+
+    target_vec = [drx[i], dry[i]]
+
+    rotate = angle_between_vectors(r_dir_vec, target_vec)
+    print(rotate)
+    rotate = rotate / 90
+    print(r_dir_vec, target_vec, rotate)
+    r_dir_vec = target_vec
+    
+    if rotate > 0:
+      for i in range(int(rotate)):
+        # 左回転
+        action_list.append((3,))
+        action_list_debug.append("rotate-left")
+
+    if rotate < 0:
+      for i in range(int(-rotate)):
+        # 左回転
+        action_list.append((2,))
+        action_list_debug.append("rotate-right")
+
+    action_list.append((1,))
+    action_list_debug.append("straight")
+
+  return action_list
+#################################################
+
 sx = env.agents[0].x  # [m]
 sy = env.agents[0].y  # [m]
-r_dir = env.agents[0].dir.value
-print("****start****")
-print("sx:", sx)
-print("sy:", sy)
-print("r_dir:", r_dir)
+s_dir = env.agents[0].dir.value
 
-r_dir_vec = [0,0]
-
-if r_dir == 0:
-  r_dir_vec = [0,-1]
-if r_dir == 1:
-  r_dir_vec = [0,1]
-if r_dir == 2:
-  r_dir_vec = [-1,0]
-if r_dir == 3:
-  r_dir_vec = [1,0]
-
-
-action_list = []
-action_list_debug = []
-
-print("rotate")
-for i in range(len(rx)-1):
-
-  target_vec = [drx[i], dry[i]]
-
-  rotate = angle_between_vectors(r_dir_vec, target_vec)
-  print(rotate)
-  rotate = rotate / 90
-  print(r_dir_vec, target_vec, rotate)
-  r_dir_vec = target_vec
-  
-  if rotate > 0:
-    for i in range(int(rotate)):
-      # 左回転
-      action_list.append((3,))
-      action_list_debug.append("rotate-left")
-
-  if rotate < 0:
-    for i in range(int(-rotate)):
-      # 左回転
-      action_list.append((2,))
-      action_list_debug.append("rotate-right")
-
-  action_list.append((1,))
-  action_list_debug.append("straight")
-
-print(action_list_debug)
-#################################################
+action_list = path_to_action([sx,sy,s_dir], [rx, ry])
 
 import time
 for i in range(len(action_list)):
