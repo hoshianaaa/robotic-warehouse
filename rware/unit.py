@@ -1,3 +1,15 @@
+############## python utils ############3
+
+import os
+home_dir = os.environ['HOME']
+python_util_dir = home_dir + "/python_utils"
+
+import sys
+sys.path.append(python_util_dir)
+
+append_dir = python_util_dir + "/ros"
+sys.path.append(append_dir)
+from calculation import *
 
 ################ A start ###########
 
@@ -105,18 +117,87 @@ if show_animation:  # pragma: no cover
     plt.pause(0.001)
     plt.show()
 
+#################################################
+# **** convert a start path to action list **** #
+#################################################
 
+# dir 0: RIGHT(1,0), 1: LEFT(-1,0), 2: DOWN(0, -1), 3:UP(0,1)
+
+# *** action ***
+#  NOOP = 0
+#  FORWARD = 1
+#  LEFT = 2
+#  RIGHT = 3
+#  TOGGLE_LOAD = 4
+
+sx = env.agents[0].x  # [m]
+sy = env.agents[0].y  # [m]
+r_dir = env.agents[0].dir.value
+print("****start****")
+print("sx:", sx)
+print("sy:", sy)
+print("r_dir:", r_dir)
+
+r_dir_vec = [0,0]
+
+if r_dir == 0:
+  r_dir_vec = [0,1]
+if r_dir == 1:
+  r_dir_vec = [0,-1]
+if r_dir == 2:
+  r_dir_vec = [-1,0]
+if r_dir == 3:
+  r_dir_vec = [1,0]
+
+
+action_list = []
+action_list_debug = []
+
+print("rotate")
+for i in range(len(rx)-1):
+
+  target_vec = [drx[i], dry[i]]
+
+  rotate = angle_between_vectors(r_dir_vec, target_vec)
+  print(rotate)
+  rotate = rotate / 90
+  print(r_dir_vec, target_vec, rotate)
+  r_dir_vec = target_vec
+  
+  if rotate > 0:
+    for i in range(int(rotate)):
+      # 左回転
+      action_list.append((3,))
+      action_list_debug.append("rotate-left")
+
+  if rotate < 0:
+    for i in range(int(-rotate)):
+      # 左回転
+      action_list.append((2,))
+      action_list_debug.append("rotate-right")
+
+  action_list.append((1,))
+  action_list_debug.append("straight")
+
+print(action_list_debug)
 #################################################
 
 import time
-#for i in range(len(action_list)):
-while True:
+for i in range(len(action_list)):
+#while True:
 
   actions = env.action_space.sample()  # the action space can be sampled
+
+  # *** action ***
+  #  NOOP = 0
+  #  FORWARD = 1
+  #  LEFT = 2
+  #  RIGHT = 3
+  #  TOGGLE_LOAD = 4
   actions = (2,)
 #  print(actions)
-  #n_obs, reward, done, info = env.step(action_list[i])
-  n_obs, reward, done, info = env.step(actions)
+  n_obs, reward, done, info = env.step(action_list[i])
+#  n_obs, reward, done, info = env.step(actions)
 #  n_obs, reward, done, info = env.step((0))
 
 #  print(reward)
@@ -134,7 +215,7 @@ while True:
   # agent
   print(env.agents[0].x)
   print(env.agents[0].y)
-  ## dir 0: 右, 1: 左, 2: 上, 3:下
+  ## dir 0: 右(1,0), 1: 左(-1,0), 2: 上(0,1), 3:下(0,-1)
   print(env.agents[0].dir.value)
 
   # shelf
