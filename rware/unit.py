@@ -233,6 +233,6 @@ for i in range(len(action_list)):
   
   env.render()
   print(env.agents[0].dir.value)
-  time.sleep(0.3)
+  time.sleep(0.1)
 
 env.close()
