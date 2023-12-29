@@ -98,28 +98,6 @@ def planning(start, goal, o):
 
   return rx, ry
 
-sx = env.agents[0].x  # [m]
-sy = env.agents[0].y  # [m]
-gx = None  # [m]
-gy = None  # [m]
-
-ox = []
-oy = []
-for i in range(len(env.shelfs)):
-  print(i)
-  print(env.shelfs[i].x)
-  print(env.shelfs[i].y)
-  if env.shelfs[i] in env.request_queue:
-    print("req")
-    gx = env.shelfs[i].x
-    gy = env.shelfs[i].y
-  else:
-    ox.append(env.shelfs[i].x)
-    oy.append(env.shelfs[i].y)
-
-    print("not req")
-
-rx, ry = planning([sx,sy], [gx, gy], [ox, oy])
 #################################################
 # **** convert a start path to action list **** #
 #################################################
@@ -192,6 +170,33 @@ def path_to_action(s, path):
   return action_list
 #################################################
 
+###### path planning ######
+
+sx = env.agents[0].x  # [m]
+sy = env.agents[0].y  # [m]
+gx = None  # [m]
+gy = None  # [m]
+
+ox = []
+oy = []
+for i in range(len(env.shelfs)):
+  print(i)
+  print(env.shelfs[i].x)
+  print(env.shelfs[i].y)
+  if env.shelfs[i] in env.request_queue:
+    print("req")
+    gx = env.shelfs[i].x
+    gy = env.shelfs[i].y
+  else:
+    ox.append(env.shelfs[i].x)
+    oy.append(env.shelfs[i].y)
+
+    print("not req")
+
+rx, ry = planning([sx,sy], [gx, gy], [ox, oy])
+
+
+##### convert path => action ######
 sx = env.agents[0].x  # [m]
 sy = env.agents[0].y  # [m]
 s_dir = env.agents[0].dir.value
@@ -202,7 +207,7 @@ import time
 for i in range(len(action_list)):
 #while True:
 
-  actions = env.action_space.sample()  # the action space can be sampled
+  #actions = env.action_space.sample()  # the action space can be sampled
 
   # *** action ***
   #  NOOP = 0
@@ -250,5 +255,38 @@ for i in range(len(action_list)):
   env.render()
   print(env.agents[0].dir.value)
   time.sleep(0.1)
+
+# トグル
+n_obs, reward, done, info = env.step((4, ))
+env.render()
+time.sleep(1)
+
+# 荷物置き場
+
+sx = env.agents[0].x  # [m]
+sy = env.agents[0].y  # [m]
+s_dir = env.agents[0].dir.value
+gx = 4  # [m]
+gy = 10  # [m]
+
+ox = []
+oy = []
+for i in range(len(env.shelfs)):
+  ox.append(env.shelfs[i].x)
+  oy.append(env.shelfs[i].y)
+
+rx, ry = planning([sx,sy], [gx, gy], [ox, oy])
+
+##### convert path => action ######
+
+action_list = path_to_action([sx,sy,s_dir], [rx, ry])
+
+for i in range(len(action_list)):
+
+  n_obs, reward, done, info = env.step(action_list[i])
+
+  env.render()
+  time.sleep(0.1)
+
 
 env.close()
