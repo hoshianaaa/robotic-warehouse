@@ -100,6 +100,11 @@ def planning(start, goal):
   rx.reverse()
   ry.reverse()
 
+  if show_animation:  # pragma: no cover
+      plt.plot(rx, ry, "-r")
+      plt.pause(0.001)
+      plt.show()
+
   return rx, ry
 
 sx = env.agents[0].x  # [m]
@@ -107,9 +112,7 @@ sy = env.agents[0].y  # [m]
 gx = 10.0  # [m]
 gy = 10.0  # [m]
 
-
 rx, ry = planning([sx,sy], [gx, gy])
-
 
 print("**** result ****")
 print(rx)
@@ -125,11 +128,6 @@ print("**** d result ****")
 print(drx)
 print(dry)
 
-
-if show_animation:  # pragma: no cover
-    plt.plot(rx, ry, "-r")
-    plt.pause(0.001)
-    plt.show()
 
 #################################################
 # **** convert a start path to action list **** #
