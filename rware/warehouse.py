@@ -870,11 +870,11 @@ if __name__ == "__main__":
     from tqdm import tqdm
 
     time.sleep(2)
-    # env.render()
-    # env.step(18 * [Action.LOAD] + 2 * [Action.NOOP])
+    env.render()
+    env.step(18 * [Action.LOAD] + 2 * [Action.NOOP])
 
     for _ in tqdm(range(1000000)):
-        # time.sleep(2)
-        # env.render()
+        time.sleep(2)
+        #env.render()
         actions = env.action_space.sample()
         env.step(actions)
