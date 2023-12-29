@@ -133,11 +133,14 @@ rx, ry = planning([sx,sy], [gx, gy], [ox, oy])
 #  RIGHT = 3
 #  TOGGLE_LOAD = 4
 
-def path_to_action([sx,sy,s_dir], [rx, ry])
+# s: [sx,sy,s_dir], path: [rx, ry]
+def path_to_action(s, path):
 
   print("**** result ****")
   print(rx)
   print(ry)
+
+  r_dir = s_dir
 
   drx = []
   dry = []
