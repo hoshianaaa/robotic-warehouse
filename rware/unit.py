@@ -46,57 +46,70 @@ action_list.append((1))
 
 ################## A Start #######################
 
+def planning(start, goal):
+  sx = start[0]
+  sy = start[1]
+  gx = goal[0]
+  gy = goal[1]
+
+  grid_size = 1.0  # [m]
+  robot_radius = 0.1  # [m]
+
+  ox, oy = [], []
+  for i in range(-1, 11):
+      ox.append(i)
+      oy.append(-1.0)
+  for i in range(-1, 11):
+      ox.append(11.0)
+      oy.append(i)
+  for i in range(-1, 11):
+      ox.append(i)
+      oy.append(11.0)
+  for i in range(-1, 11):
+      ox.append(-1.0)
+      oy.append(i)
+
+  ox.append(11)
+  oy.append(11)
+
+  for i in range(len(env.shelfs)):
+    print(i)
+    print(env.shelfs[i].x)
+    print(env.shelfs[i].y)
+    if env.shelfs[i] in env.request_queue:
+      print("req")
+      gx = env.shelfs[i].x
+      gy = env.shelfs[i].y
+    else:
+      ox.append(env.shelfs[i].x)
+      oy.append(env.shelfs[i].y)
+
+      print("not req")
+   
+  show_animation = False
+  if show_animation:  # pragma: no cover
+      plt.plot(ox, oy, ".k")
+      plt.plot(sx, sy, "og")
+      plt.plot(gx, gy, "xb")
+      plt.grid(True)
+      plt.axis("equal")
+
+  a_star = AStarPlanner(ox, oy, grid_size, robot_radius)
+  rx, ry = a_star.planning(sx, sy, gx, gy)
+
+  rx.reverse()
+  ry.reverse()
+
+  return rx, ry
+
 sx = env.agents[0].x  # [m]
 sy = env.agents[0].y  # [m]
 gx = 10.0  # [m]
 gy = 10.0  # [m]
-grid_size = 1.0  # [m]
-robot_radius = 0.1  # [m]
 
-ox, oy = [], []
-for i in range(-1, 11):
-    ox.append(i)
-    oy.append(-1.0)
-for i in range(-1, 11):
-    ox.append(11.0)
-    oy.append(i)
-for i in range(-1, 11):
-    ox.append(i)
-    oy.append(11.0)
-for i in range(-1, 11):
-    ox.append(-1.0)
-    oy.append(i)
 
-ox.append(11)
-oy.append(11)
+rx, ry = planning([sx,sy], [gx, gy])
 
-for i in range(len(env.shelfs)):
-  print(i)
-  print(env.shelfs[i].x)
-  print(env.shelfs[i].y)
-  if env.shelfs[i] in env.request_queue:
-    print("req")
-    gx = env.shelfs[i].x
-    gy = env.shelfs[i].y
-  else:
-    ox.append(env.shelfs[i].x)
-    oy.append(env.shelfs[i].y)
-
-    print("not req")
- 
-show_animation = False
-if show_animation:  # pragma: no cover
-    plt.plot(ox, oy, ".k")
-    plt.plot(sx, sy, "og")
-    plt.plot(gx, gy, "xb")
-    plt.grid(True)
-    plt.axis("equal")
-
-a_star = AStarPlanner(ox, oy, grid_size, robot_radius)
-rx, ry = a_star.planning(sx, sy, gx, gy)
-
-rx.reverse()
-ry.reverse()
 
 print("**** result ****")
 print(rx)
