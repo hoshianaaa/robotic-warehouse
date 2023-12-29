@@ -121,7 +121,7 @@ if show_animation:  # pragma: no cover
 # **** convert a start path to action list **** #
 #################################################
 
-# dir 0: RIGHT(1,0), 1: LEFT(-1,0), 2: DOWN(0, -1), 3:UP(0,1)
+# dir 0: DOWN(0,-1), 1: UP(0,1), 2: LEFT(-1, 0), 3: RIGHT(1,0)
 
 # *** action ***
 #  NOOP = 0
@@ -141,9 +141,9 @@ print("r_dir:", r_dir)
 r_dir_vec = [0,0]
 
 if r_dir == 0:
-  r_dir_vec = [0,1]
-if r_dir == 1:
   r_dir_vec = [0,-1]
+if r_dir == 1:
+  r_dir_vec = [0,1]
 if r_dir == 2:
   r_dir_vec = [-1,0]
 if r_dir == 3:
@@ -194,7 +194,7 @@ for i in range(len(action_list)):
   #  LEFT = 2
   #  RIGHT = 3
   #  TOGGLE_LOAD = 4
-  actions = (2,)
+#  actions = (2,)
 #  print(actions)
   n_obs, reward, done, info = env.step(action_list[i])
 #  n_obs, reward, done, info = env.step(actions)
@@ -216,7 +216,6 @@ for i in range(len(action_list)):
   print(env.agents[0].x)
   print(env.agents[0].y)
   ## dir 0: 右(1,0), 1: 左(-1,0), 2: 上(0,1), 3:下(0,-1)
-  print(env.agents[0].dir.value)
 
   # shelf
 #  print()
@@ -232,7 +231,8 @@ for i in range(len(action_list)):
   
 #  print(env.request_queue)
   
-  time.sleep(1)
   env.render()
+  print(env.agents[0].dir.value)
+  time.sleep(1)
 
 env.close()
