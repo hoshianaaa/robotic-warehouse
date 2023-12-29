@@ -237,24 +237,24 @@ def main():
     # start and goal position
     sx = 0.0  # [m]
     sy = 0.0  # [m]
-    gx = 100.0  # [m]
-    gy = 100.0  # [m]
-    grid_size = 10.0  # [m]
-    robot_radius = 1.0  # [m]
+    gx = 10.0  # [m]
+    gy = 10.0  # [m]
+    grid_size = 1.0  # [m]
+    robot_radius = 0.1  # [m]
 
     # set obstacle positions
     ox, oy = [], []
-    for i in range(-10, 110):
+    for i in range(-1, 11):
         ox.append(i)
-        oy.append(-10.0)
-    for i in range(-10, 110):
-        ox.append(110.0)
+        oy.append(-1.0)
+    for i in range(-1, 11):
+        ox.append(11.0)
         oy.append(i)
-    for i in range(-10, 110):
+    for i in range(-1, 11):
         ox.append(i)
-        oy.append(110.0)
-    for i in range(-10, 110):
-        ox.append(-10.0)
+        oy.append(11.0)
+    for i in range(-1, 11):
+        ox.append(-1.0)
         oy.append(i)
     #for i in range(-10, 40):
     #    ox.append(20.0)
