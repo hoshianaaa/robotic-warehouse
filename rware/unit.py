@@ -72,8 +72,6 @@ for i in range(len(env.shelfs)):
 
     print("not req")
  
-
-
 if show_animation:  # pragma: no cover
     plt.plot(ox, oy, ".k")
     plt.plot(sx, sy, "og")
@@ -88,6 +86,7 @@ if show_animation:  # pragma: no cover
     plt.plot(rx, ry, "-r")
     plt.pause(0.001)
     plt.show()
+
 #################################################
 
 import time
@@ -116,21 +115,22 @@ while True:
   # agent
   print(env.agents[0].x)
   print(env.agents[0].y)
+  ## dir 0: 右, 1: 左, 2: 上, 3:下
   print(env.agents[0].dir.value)
 
   # shelf
-  print()
-  print("*** shelf ***")
-  for i in range(len(env.shelfs)):
-    print(i)
-    print(env.shelfs[i].x)
-    print(env.shelfs[i].y)
-    if env.shelfs[i] in env.request_queue:
-      print("req")
-    else:
-      print("not req")
+#  print()
+#  print("*** shelf ***")
+#  for i in range(len(env.shelfs)):
+#    print(i)
+#    print(env.shelfs[i].x)
+#    print(env.shelfs[i].y)
+#    if env.shelfs[i] in env.request_queue:
+#      print("req")
+#    else:
+#      print("not req")
   
-  print(env.request_queue)
+#  print(env.request_queue)
   
   time.sleep(1)
   env.render()
