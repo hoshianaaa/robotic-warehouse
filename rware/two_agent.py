@@ -11,6 +11,15 @@ append_dir = python_util_dir + "/ros"
 sys.path.append(append_dir)
 from calculation import *
 
+################# CBS ####################
+
+# github.com:hoshianaaa/multi_agent_path_planning.git
+
+cbs_dir = home_dir + "/multi_agent_path_planning/centralized/cbs"
+sys.path.append(cbs_dir)
+
+from cbs import CBS, Environment
+
 ################ A start ###########
 
 import os
@@ -24,25 +33,12 @@ import rware
 
 env = gym.make("rware-tiny-2ag-v1", sensor_range=3, request_queue_size=2)
 
-#print(env.n_agents)
-#print(env.action_space[0])
-#print(env.observation_space)
 obs = env.reset()  # a tuple of observations
-#env.agents[0].x = 1
-#env.agents[0].y = 1
 
 print(obs)
 
-#print(actions)
-#print(done)    # [False, False]
-#print(reward)  # [0.0, 0.0]
-#print(obs[0]["location"])
-
 action_list = []
 action_list.append((1))
-#action_list.append((1,1))
-
-# エージェントの位置を初期化
 
 ################## A Start #######################
 
