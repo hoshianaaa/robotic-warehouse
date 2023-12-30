@@ -193,6 +193,14 @@ while True:
       oy.append(env.shelfs[i].y)
 
       print("not req")
+  
+  # 荷物置き場
+  ox.append(3)
+  oy.append(10)
+
+  ox.append(5)
+  oy.append(10)
+
 
   rx, ry = planning([sx,sy], [gx, gy], [ox, oy])
 
@@ -207,55 +215,9 @@ while True:
   import time
 
   for i in range(len(action_list)):
-#while True:
-
-    #actions = env.action_space.sample()  # the action space can be sampled
-
-    # *** action ***
-    #  NOOP = 0
-    #  FORWARD = 1
-    #  LEFT = 2
-    #  RIGHT = 3
-    #  TOGGLE_LOAD = 4
-#  actions = (2,)
-#  print(actions)
     n_obs, reward, done, info = env.step(action_list[i])
-#  n_obs, reward, done, info = env.step(actions)
-#  n_obs, reward, done, info = env.step((0))
 
-#  print(reward)
-#  print(n_obs)
-    #print(info)
-#  print(env.observation_space)
-   # print(env.grid)
-#  print(env.normalised_coordinates)
-    #print(env.shelfs)
-    #print(env.highways)
-
-    # goal
-    print(env.goals)
-
-    # agent
-    print(env.agents[0].x)
-    print(env.agents[0].y)
-    ## dir 0: 右(1,0), 1: 左(-1,0), 2: 上(0,1), 3:下(0,-1)
-
-    # shelf
-#  print()
-#  print("*** shelf ***")
-#  for i in range(len(env.shelfs)):
-#    print(i)
-#    print(env.shelfs[i].x)
-#    print(env.shelfs[i].y)
-#    if env.shelfs[i] in env.request_queue:
-#      print("req")
-#    else:
-#      print("not req")
-    
-#  print(env.request_queue)
-    
     env.render()
-    print(env.agents[0].dir.value)
     time.sleep(0.1)
 
 # トグル
@@ -276,6 +238,13 @@ while True:
   for i in range(len(env.shelfs)):
     ox.append(env.shelfs[i].x)
     oy.append(env.shelfs[i].y)
+
+  # 荷物置き場 
+  ox.append(3)
+  oy.append(10)
+
+  ox.append(5)
+  oy.append(10)
 
   rx, ry = planning([sx,sy], [gx, gy], [ox, oy])
 
