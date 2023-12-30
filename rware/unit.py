@@ -78,12 +78,12 @@ def planning(start, goal, o):
 
   
   show_animation = False
-  if show_animation:  # pragma: no cover
-      plt.plot(ox, oy, ".k")
-      plt.plot(sx, sy, "og")
-      plt.plot(gx, gy, "xb")
-      plt.grid(True)
-      plt.axis("equal")
+  #if show_animation:  # pragma: no cover
+  #    plt.plot(ox, oy, ".k")
+  #    plt.plot(sx, sy, "og")
+  #    plt.plot(gx, gy, "xb")
+  #    plt.grid(True)
+  #    plt.axis("equal")
 
   a_star = AStarPlanner(ox, oy, grid_size, robot_radius)
   rx, ry = a_star.planning(sx, sy, gx, gy)
@@ -91,10 +91,10 @@ def planning(start, goal, o):
   rx.reverse()
   ry.reverse()
 
-  if show_animation:  # pragma: no cover
-      plt.plot(rx, ry, "-r")
-      plt.pause(0.001)
-      plt.show()
+  #if show_animation:  # pragma: no cover
+  #    plt.plot(rx, ry, "-r")
+  #    plt.pause(0.001)
+  #    plt.show()
 
   return rx, ry
 
