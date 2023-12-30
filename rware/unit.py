@@ -173,6 +173,8 @@ def path_to_action(s, path):
 while True:
 ###### path planning ######
 
+  #### 
+
   sx = env.agents[0].x  # [m]
   sy = env.agents[0].y  # [m]
   gx = None  # [m]
@@ -181,13 +183,9 @@ while True:
   ox = []
   oy = []
   for i in range(len(env.shelfs)):
-    print(i)
-    print(env.shelfs[i].x)
-    print(env.shelfs[i].y)
     if env.shelfs[i] in env.request_queue:
-      print("req")
-      gx = env.shelfs[i].x
-      gy = env.shelfs[i].y
+      pick_place_x = env.shelfs[i].x
+      pick_place_y = env.shelfs[i].y
     else:
       ox.append(env.shelfs[i].x)
       oy.append(env.shelfs[i].y)
@@ -202,7 +200,7 @@ while True:
   oy.append(10)
 
 
-  rx, ry = planning([sx,sy], [gx, gy], [ox, oy])
+  rx, ry = planning([sx, sy], [pick_place_x, pick_place_y], [ox, oy])
 
 
 ##### convert path => action ######
@@ -259,7 +257,41 @@ while True:
     env.render()
     time.sleep(0.1)
 
-  # トグル
+  ################ 荷物を戻す ####################
+  sx = env.agents[0].x  # [m]
+  sy = env.agents[0].y  # [m]
+  s_dir = env.agents[0].dir.value
+  gx = pick_place_x  # [m]
+  gy = pick_place_y  # [m]
+
+  ox = []
+  oy = []
+  for i in range(len(env.shelfs)):
+    ox.append(env.shelfs[i].x)
+    oy.append(env.shelfs[i].y)
+
+  # 荷物置き場 
+  ox.append(3)
+  oy.append(10)
+
+  ox.append(5)
+  oy.append(10)
+
+  rx, ry = planning([sx,sy], [gx, gy], [ox, oy])
+
+  ##### convert path => action ######
+
+  action_list = path_to_action([sx,sy,s_dir], [rx, ry])
+
+  for i in range(len(action_list)):
+
+    n_obs, reward, done, info = env.step(action_list[i])
+
+    env.render()
+    time.sleep(0.1)
+
+
+# トグル
   n_obs, reward, done, info = env.step((4, ))
   env.render()
   time.sleep(1)
