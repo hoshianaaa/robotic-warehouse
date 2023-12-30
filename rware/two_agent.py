@@ -166,6 +166,34 @@ def path_to_action(s, path):
   return action_list
 #################################################
 
+dimension = [10, 11]
+obstacles = []
+
+pick_places = []
+for i in range(len(env.shelfs)):
+  if env.shelfs[i] in env.request_queue:
+    pick_place_x = env.shelfs[i].x
+    pick_place_y = env.shelfs[i].y
+    pick_places.append((pick_place_x, pick_place_y))
+  else:
+    ox = env.shelfs[i].x
+    oy = env.shelfs[i].y
+    obstacles.append((ox, oy))
+
+agents = []
+for i in range(len(env.agents)):
+  sx = env.agents[i].x
+  sy = env.agents[i].y
+  agents.append({'start': [sx, sy], 'goal': pick_places[i], 'name': 'agent'+str(i)})
+
+sx = env.agents[0].x  # [m]
+sy = env.agents[0].y  # [m
+
+env = Environment(dimension, agents, obstacles)
+cbs = CBS(env)
+solution = cbs.search()
+print(solution)
+
 while True:
   
   env.render()
